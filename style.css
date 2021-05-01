@@ -1,0 +1,26 @@
+body{
+    background-image: url('img/background.jpg');
+    background-size: 100%;       
+    background-repeat: no-repeat; 
+    font-family: 'Poppins', sans-serif;    
+}
+
+nav{
+    background: transparent;
+}
+
+.row{
+    justify-content: center;
+}
+.nav-link{
+    font-weight: 600;
+    font-size: 1em;
+}
+
+#error{
+    visibility:hidden;
+    align-self: flex-end;
+}
+.form-group{
+    text-align: end;
+}
