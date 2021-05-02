@@ -11,9 +11,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    >
-    <link rel="stylesheet" href="style.css">
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />    
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -52,38 +51,10 @@
 
 
 
-    <script>
-        var errorEle = document.getElementById('error');
-        var password = document.getElementById('pass');
-        var form = document.getElementById('myForm');
+   
+       
 
-        form.addEventListener('submit', function (e) {
-            var failed, message;
-
-            if (password.value == null || password.value == "") {
-                message = "Password cannot be blank!";
-                failed = true;
-            }
-            else if (password.value.length < 8) {
-                message = "Cannot be shorter than 8 characters";
-                failed = true;
-            }
-            else if (!password.value.match(/^(?=.*\d)(?=.*[a-zA-Z]+)(?=.*[\!\"\£\$\%\^\&\*\(\)]+).{8,}$/)) {
-                message = "Atleast 1 Lowercase, 1 Uppercase, 1 digit and 1 Special character";
-                failed = true;
-                }
-
-
-            if (failed) {
-                e.preventDefault();
-                errorEle.innerHTML = message;
-                errorEle.style.visibility = 'visible';
-            }
-            
-        })
-
-
-    </script>
+    <script src="js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
