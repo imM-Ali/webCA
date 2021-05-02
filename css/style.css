@@ -1,20 +1,33 @@
 body{
-    background-image: url('/img/background.jpg');
-    background-size: 100%;       
+    background-image: url('../img/background.jpg');
+    background-size: cover;       
     background-repeat: no-repeat; 
-    font-family: 'Poppins', sans-serif;    
+    font-family: 'Poppins', sans-serif;
+    background-attachment: fixed;
+}
+.card{
+    opacity: 95%;
+   
 }
 
-nav{
-    background: transparent;
+.card-link{
+    color: gray;
+    font-weight: 400;
+    text-decoration: underline;
 }
+.card-link:hover{
+    color: black;
+  }
+
+
 
 .row{
     justify-content: center;
 }
 .nav-link{
-    font-weight: 600;
-    font-size: 1em;
+    font-weight: 500;
+    font-size: 1.3em;
+    color: black !important;    
 }
 
 #error{
@@ -32,4 +45,8 @@ nav{
     border: none;
     box-shadow: none;
     border-bottom: 1px solid lightgreen;
+}
+.thumbnail{
+    height: 2px;
+    width: 2px;
 }

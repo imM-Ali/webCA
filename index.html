@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />    
-    <link rel="stylesheet" href="/css/style.css">
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-light">
+    <nav class="navbar navbar-expand  mt-3 mb-5 navbar-light">
         <a class="navbar-brand" href="#">
             <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="">
         </a>
@@ -34,23 +34,18 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col-5 rounded shadow align-center bg-light">
-                <form method="POST" action="orders.html" id="myForm" class="mt-4">
+                <form action="orders.html" id="myForm" class="mt-4">
                     <div class="form-group">
                         <input type="password" class="form-control" id="pass" placeholder="Password">
                         <small id="error"></small>
                     </div>
-                   <a class="btn btn-primary mb-3" id="mybtn" href="orders.html" style="display: none;">Proceed</a>
+                    <button class="btn btn-primary mb-3" type="submit" id="mybtn"
+                        style="display: none;">Proceed</button>
                 </form>
             </div>
         </div>
     </div>
 
-
-
-
-
-   
-       
 
     <script src="js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

@@ -1,3 +1,5 @@
+/*PART 1*/
+
 var errorEle = document.getElementById('error');
 var password = document.getElementById('pass');
 var form = document.getElementById('myForm');
@@ -30,12 +32,18 @@ password.addEventListener('keyup', function () {
     } else {
         document.querySelector('input').style.borderBottom = '1px solid lightgreen';
         document.getElementById('mybtn').style.display = 'inline-block';
+
     }
 
 });
 //prevents form submission if there is an error message
+
 form.addEventListener('submit', (e) => {
     if (errMsg != "") {
         e.preventDefault();
     }
+
 })
+
+
+
