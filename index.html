@@ -58,31 +58,28 @@
         var form = document.getElementById('myForm');
 
         form.addEventListener('submit', function (e) {
-            var flag, message;
+            var failed, message;
 
             if (password.value == null || password.value == "") {
                 message = "Password cannot be blank!";
-                flag = true;
+                failed = true;
             }
             else if (password.value.length < 8) {
                 message = "Cannot be shorter than 8 characters";
-                flag = true;
-            } else if (password.value.length > 16) {
-                message = "Cannot be greater than 16 characters";
-                flag = true;
+                failed = true;
             }
-            else if (!password.value.match(/^(?=.*\d).{8,16}$/)) {
-                message = "Atleast 1 numeric";
-                flag = true;
+            else if (!password.value.match(/^(?=.*\d)(?=.*[a-zA-Z]+)(?=.*[\!\"\£\$\%\^\&\*\(\)]+).{8,}$/)) {
+                message = "Atleast 1 Lowercase, 1 Uppercase, 1 digit and 1 Special character";
+                failed = true;
                 }
 
 
-            if (flag) {
+            if (failed) {
                 e.preventDefault();
                 errorEle.innerHTML = message;
                 errorEle.style.visibility = 'visible';
             }
-
+            
         })
 
 
