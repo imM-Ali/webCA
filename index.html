@@ -33,16 +33,15 @@
     </nav>
     <div class="container">
         <div class="row mt-5">
-            <div class="col-5 align-center bg-light">
-                <form action="orders.html" id="myForm" class="mt-4">
+            <div class="col-5 rounded shadow align-center bg-light">
+                <form method="POST" action="orders.html" id="myForm" class="mt-4">
                     <div class="form-group">
                         <input type="password" class="form-control" id="pass" placeholder="Password">
                         <small id="error"></small>
                     </div>
-                    <button id="submit" type="submit" class="btn btn-primary mb-4">Check</button>
+                   <a class="btn btn-primary mb-3" id="mybtn" href="orders.html" style="display: none;">Proceed</a>
                 </form>
             </div>
-
         </div>
     </div>
 
