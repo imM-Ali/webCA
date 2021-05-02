@@ -24,3 +24,7 @@ nav{
 .form-group{
     text-align: end;
 }
+.form-control{
+    border:none;    
+    
+}

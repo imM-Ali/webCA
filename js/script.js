@@ -3,7 +3,7 @@ var password = document.getElementById('pass');
 var form = document.getElementById('myForm');
 
 form.addEventListener('submit', function (e) {
-    var failed, message;
+    var failed=false, message;
 
     if (password.value == null || password.value == "") {
         message = "Password cannot be blank!";
@@ -17,12 +17,11 @@ form.addEventListener('submit', function (e) {
         message = "Atleast 1 Lowercase, 1 Uppercase, 1 digit and 1 Special character";
         failed = true;
     }
-
-
-    if (failed) {
+   
+    if (failed) { 
         e.preventDefault();
         errorEle.innerHTML = message;
         errorEle.style.visibility = 'visible';
+        document.querySelector('input').style.borderBottom = '1px solid red';
     }
-
 })
