@@ -52,7 +52,7 @@ nxtBtn.addEventListener('click', (e) => {
                             "<img class='card-img-top' style='width:60%; align-self: center; margin-top:5px' src='" + data.results[i].picture.large + "'>" +
                             "<div class='card-body'><h5 class='card-title'>" + data.results[i].name.first + " " + data.results[i].name.last + "</h5></div>" +
                             "<ul class='list-group list-group-flush'><li class='list-group-item'>" + data.results[i].email + "</li></ul>" +
-                            "<div class='card-body'><a href='#/' id='modalCall_" + i + "' class='card-link'>Take order</a></div></div></div>"
+                            "</div></div>"
                         document.getElementById('content').innerHTML += customer;
 
                     }
@@ -68,6 +68,7 @@ nxtBtn.addEventListener('click', (e) => {
                     for (let i = 0; i < Starters.length; i++) {
                         document.getElementById('starters').innerHTML += "<option value='" + JSON.stringify(Starters[i]) + "'>" + Starters[i].name + "</option>"
                         document.getElementById('mains').innerHTML += "<option value='" + JSON.stringify(Mains[i]) + "'>" + Mains[i].name + "</option>"
+                        document.getElementById('drinks').innerHTML += "<option value='" + JSON.stringify(Drinks[i]) + "'>" + Drinks[i].name + "</option>"
                     }
                 })
 
@@ -94,61 +95,117 @@ var Starters = [{
         "price": 4.25
     }
 ]
-
-var Mains = [{
-        "name": "Lamb Biryani",
-        "description": "rice",
-        "isVeg": false,
-        "price": 5.99
+var Drinks = [{
+        "name": "Sprite",
+        "description": "Clear",
+        "price": 1.99
     },
     {
-        "name": "Mustard Stuffed Chicken",
-        "description": "chick",
-        "isVeg": false,
-        "price": 7.99
+        "name": "Coke",
+        "description": "Cola",
+        "price": 2.99
     },
     {
-        "name": "Veg Lasagne",
-        "description": "veggies",
-        "isVeg": true,
-        "price": 3.99
+        "name": "Fanta",
+        "description": "Funky",
+        "price": 1.25
     }
-
 ]
+var Mains = [{
+            "name": "Lamb Biryani",
+            "description": "rice",
+            "isVeg": false,
+            "price": 5.99
+        },
+        {
+            "name": "Mustard Stuffed Chicken",
+            "description": "chick",
+            "isVeg": false,
+            "price": 7.99
+        },
+        {
+            "name": "Veg Lasagne",
+            "description": "veggies",
+            "isVeg": true,
+            "price": 3.99
+        }
 
-var selectedStarter, selectedMain;
+    ]
+    //declaring selected items, will set value later
+var selectedStarterPrice, selectedMainPrice, selectedDrinkPrice, TotalPrice;
 document.querySelector('form').addEventListener('submit', (e) => {
+    //prevents form submission
     e.preventDefault();
-    const formData = new FormData(e.target);
-    var starterIndex = formData.get('starters');
-    var mainIndex = formData.get('mains');
     document.querySelector('.total').removeAttribute("hidden");
-    if (starterIndex != 'none' && mainIndex != 'none') {
-        document.querySelector('.total').innerHTML = "<strong>Total: </strong>" + (selectedStarter + selectedMain) + "";
-    } else if (starterIndex == 'none' && mainIndex != 'none') {
-        document.querySelector('.total').innerHTML = "<strong>Total: </strong>" + selectedMain + "";
-    } else if (starterIndex != 'none' && mainIndex == 'none') {
-        document.querySelector('.total').innerHTML = "<strong>Total: </strong>" + selectedStarter + "";
-    } else {
-        document.querySelector('.total').innerHTML = "";
-        document.querySelector('.total').innerHTML = "Select something please";
-    }
+    //handles if one dropdown is not changed from default value
+    TotalPrice = nanHandler(selectedStarterPrice, selectedMainPrice, selectedDrinkPrice);
+    document.querySelector('.total').innerHTML = "<strong>Total: </strong>" + TotalPrice + "";
+    document.querySelector('#breakDown').removeAttribute("hidden");
 });
 
+function nanHandler(a, b, c) {
+    if (isNaN(a)) {
+        a = 0;
+    }
+    if (isNaN(b)) {
+        b = 0;
+    }
+    if (isNaN(c)) {
+        c = 0;
+    }
+    return a + b + c;
+}
 
 document.getElementById('starters').addEventListener('change', event => {
 
     var obj = JSON.parse(event.target.value);
-    selectedStarter = obj.price;
-    document.getElementById('sNature').innerHTML = "Vegetarian: ";
-    document.getElementById('sNature').innerHTML += obj.isVeg;
+    selectedStarterPrice = obj.price;
+    if (obj.isVeg) {
+        document.getElementById('sNature').innerHTML = " -veg- ";
+    } else {
+        document.getElementById('sNature').innerHTML = "";
+    }
+    tableWriter(obj, "row_1");
 
 })
 document.getElementById('mains').addEventListener('change', event => {
 
     var obj = JSON.parse(event.target.value);
-    selectedMain = obj.price;
-    document.getElementById('mNature').innerHTML = "Vegetarian: ";
-    document.getElementById('mNature').innerHTML += obj.isVeg;
+    selectedMainPrice = obj.price;
+    if (obj.isVeg) {
+        document.getElementById('mNature').innerHTML = " -veg- ";
+    } else {
+        document.getElementById('mNature').innerHTML = "";
+    }
+    tableWriter(obj, "row_2");
+})
+
+document.getElementById('drinks').addEventListener('change', event => {
+
+    var obj = JSON.parse(event.target.value);
+    selectedDrinkPrice = obj.price;
+    tableWriter(obj, "row_3");
 
 })
+
+
+function tableWriter(obj, start = "") {
+
+    document.getElementById("" + start + "").innerHTML = "";
+    switch (start) {
+        case "row_1":
+            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Starter</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
+            break;
+        case "row_2":
+            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Main</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
+            break;
+        case "row_3":
+            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Drink</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
+            break;
+    }
+
+
+
+
+
+}

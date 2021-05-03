@@ -38,31 +38,67 @@
         </div>
 
         <div class="formSection" hidden>
-            <div class="form-data">
-                <div class="header">
-                    <h4>Please Select your items</h4>
-                </div>
-                <form action="">
-                    <div class="form-group">
-                        <label>Select Starter:</label>
-                        <select name="starters" id="starters">
-                            <option value="none" disabled selected>Select..</option>
-                        </select>
-                        <span id="sNature"></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Select Main:</label>
-                        <select name="mains" id="mains">
-                            <option value="none" disabled selected>Select..</option>
-                        </select>
-                        <span id="mNature">Vegetarian: </span>
-                    </div>
-                    <button class="btn btn-secondary" id="buyBtn">Buy</button>
-                </form>
-                <div class="total mt-5" hidden>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-data">
+                        <div class="header">
+                            <h4>Please select your items</h4>
+                        </div>
+                        <form action="">
+                            <div class="form-group">
+                                <label>Select Starter:</label>
+                                <select name="starters" id="starters">
+                                    <option value="none" disabled selected>Select..</option>
+                                </select>
+                                <span id="sNature"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Select Main:</label>
+                                <select name="mains" id="mains">
+                                    <option value="none" disabled selected>Select..</option>
+                                </select>
+                                <span id="mNature"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Select Drink:</label>
+                                <select name="drinks" id="drinks">
+                                    <option value="none" disabled selected>Select..</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-secondary" id="buyBtn">Add</button>
+                        </form>
 
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="breakDown" hidden>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="row_1">
+
+                                </tr>
+                                <tr id="row_2">
+
+                                </tr>
+                                <tr id="row_3">
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="total mt-5" hidden>
+
+                    </div>
                 </div>
             </div>
+
         </div>
 
 
