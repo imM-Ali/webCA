@@ -9,9 +9,12 @@ body{
     opacity: 95%;
    
 }
-#close{
-   position: relative;
-   top: 90%;
+.close{
+   position: absolute;
+   right: 14px;
+   font-size: 3em;
+   transform: rotate(45deg);
+   cursor: pointer;
 }
 .card-link{
     color: gray;
@@ -30,7 +33,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-
+    display:none;
+    z-index: 999;
 }
 
 
@@ -40,6 +44,7 @@ body{
     background-color: white ;
     border-radius: 9px;
     text-align: center;
+    position:absolute;
 }
 
 .row{
