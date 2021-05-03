@@ -50,6 +50,7 @@
                                 <select name="starters" id="starters">
                                     <option value="none" disabled selected>Select..</option>
                                 </select>
+                                <input type="number" id="starterQuantity" min="0" max="5" placeholder="0">
                                 <span id="sNature"></span>
                             </div>
                             <div class="form-group">
@@ -57,6 +58,7 @@
                                 <select name="mains" id="mains">
                                     <option value="none" disabled selected>Select..</option>
                                 </select>
+                                <input type="number" id="mainQuantity" min="0" max="5" placeholder="0">
                                 <span id="mNature"></span>
                             </div>
                             <div class="form-group">
@@ -64,8 +66,9 @@
                                 <select name="drinks" id="drinks">
                                     <option value="none" disabled selected>Select..</option>
                                 </select>
+                                <input type="number" id="drinkQuantity" min="0" max="5" placeholder="0">
                             </div>
-                            <button class="btn btn-secondary" id="buyBtn">Add</button>
+                            <button class="btn btn-secondary" id="buyBtn">Get Price</button>
                         </form>
 
                     </div>
@@ -75,7 +78,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Type</th>
                                     <th scope="col">Item</th>
                                     <th scope="col">Price</th>
                                 </tr>

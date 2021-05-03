@@ -132,16 +132,25 @@ var Mains = [{
 
     ]
     //declaring selected items, will set value later
-var selectedStarterPrice, selectedMainPrice, selectedDrinkPrice, TotalPrice;
+var selectedStarter, selectedMain, selectedDrink, TotalPrice, quantityStarter, quantityMain, quantityDrink;
 document.querySelector('form').addEventListener('submit', (e) => {
     //prevents form submission
     e.preventDefault();
     document.querySelector('.total').removeAttribute("hidden");
-    //handles if one dropdown is not changed from default value
-    TotalPrice = nanHandler(selectedStarterPrice, selectedMainPrice, selectedDrinkPrice);
-    document.querySelector('.total').innerHTML = "<strong>Total: </strong>" + TotalPrice + "";
+    //handles if one dropdown is not changed from default value   
     document.querySelector('#breakDown').removeAttribute("hidden");
+    document.getElementById('buyBtn').innerText = 'Update Total';
+    quantityStarter = getQuantity("starter");
+    quantityMain = getQuantity("main");
+    quantityDrink = getQuantity("drink");
+    tableWriter(selectedStarter, quantityStarter, selectedMain, quantityMain, selectedDrink, quantityDrink)
+    TotalPrice = nanHandler(selectedStarter.price * quantityStarter, selectedMain.price * quantityMain, selectedDrink.price * quantityDrink);
+    document.querySelector('.total').innerHTML = "<strong>Total: </strong>" + TotalPrice + "";
 });
+
+function getQuantity(str) {
+    return document.getElementById("" + str + "Quantity").value;
+}
 
 function nanHandler(a, b, c) {
     if (isNaN(a)) {
@@ -157,52 +166,48 @@ function nanHandler(a, b, c) {
 }
 
 document.getElementById('starters').addEventListener('change', event => {
-
+    console.log(quantityStarter)
     var obj = JSON.parse(event.target.value);
-    selectedStarterPrice = obj.price;
+    selectedStarter = obj;
     if (obj.isVeg) {
         document.getElementById('sNature').innerHTML = " -veg- ";
     } else {
         document.getElementById('sNature').innerHTML = "";
     }
-    tableWriter(obj, "row_1");
+
 
 })
 document.getElementById('mains').addEventListener('change', event => {
-
+    console.log(quantityMain)
     var obj = JSON.parse(event.target.value);
-    selectedMainPrice = obj.price;
+    selectedMain = obj;
     if (obj.isVeg) {
         document.getElementById('mNature').innerHTML = " -veg- ";
     } else {
         document.getElementById('mNature').innerHTML = "";
     }
-    tableWriter(obj, "row_2");
+
 })
 
 document.getElementById('drinks').addEventListener('change', event => {
 
     var obj = JSON.parse(event.target.value);
-    selectedDrinkPrice = obj.price;
-    tableWriter(obj, "row_3");
+    selectedDrink = obj;
+
 
 })
 
 
-function tableWriter(obj, start = "") {
+function tableWriter(a, b, c, d, e, f) {
 
-    document.getElementById("" + start + "").innerHTML = "";
-    switch (start) {
-        case "row_1":
-            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Starter</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
-            break;
-        case "row_2":
-            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Main</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
-            break;
-        case "row_3":
-            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Drink</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
-            break;
-    }
+    document.getElementById("row_1").innerHTML = "";
+    document.getElementById("row_2").innerHTML = "";
+    document.getElementById("row_3").innerHTML = "";
+    document.getElementById("row_1").innerHTML += "<td>" + a.name + " x" + b + "</td><td>" + a.price * b + "</td>";
+    document.getElementById("row_2").innerHTML += "<td>" + c.name + " x" + d + "</td><td>" + c.price * d + "</td>";
+    document.getElementById("row_3").innerHTML += "<td>" + e.name + " x" + f + "</td><td>" + e.price * f + "</td>";
+
+
 
 
 
