@@ -33,16 +33,18 @@
     </div>
     <div id="myModal" class="myModal" style="display: none;">
         <div class="content container">
-            <button id="close" class="btn btn-secondary">Close</button>
             <form id="modalForm" class="mt-5" action="">
-               
+                <select name="food" id="category">
+
+                </select>
+                <button type="submit" class="btn btn-secondary">Buy</button>
             </form>
         </div>
     </div>
 
 
     <script>
-          
+
         fetch('https://randomuser.me/api/?results=5&inc=name,picture,email')
             .then(response => response.json())
             .then(data => {
@@ -52,33 +54,40 @@
                         + "<img class='card-img-top' style='width:60%; align-self: center; margin-top:5px' src='" + data.results[i].picture.large + "'>"
                         + "<div class='card-body'><h5 class='card-title'>" + data.results[i].name.first + " " + data.results[i].name.last + "</h5></div>"
                         + "<ul class='list-group list-group-flush'><li class='list-group-item'>" + data.results[i].email + "</li></ul>"
-                        + "<div class='card-body'><a href='#/' id='modalCall_"+i+"' class='card-link'>Take order</a></div></div></div>"
-                    document.getElementById('parent').innerHTML += customer;                   
-                    
+                        + "<div class='card-body'><a href='#/' id='modalCall_" + i + "' class='card-link'>Take order</a></div></div></div>"
+                    document.getElementById('parent').innerHTML += customer;
+
                 }
-               
-                                        
-            }).then(()=>{
-                let links = document.getElementsByClassName("card-link");
-                for (var i = 0; i < links.length; i++) {
-                links[i].addEventListener('click',()=>{
-                    document.getElementById('myModal').style.display = 'block'
-                    document.getElementById('close').addEventListener('click',()=>{
-                        document.getElementById('myModal').style.display = 'none'
+
+
+            }).then(() => {
+
+                var el = document.querySelectorAll('.card-link');
+                el.forEach(element => {
+                    var parent = element.parentElement.parentElement.parentElement.id
+                    element.addEventListener('click', () => {
+                        document.getElementById('myModal').style.display = 'block'
+                        document.getElementById('modalForm').innerHTML += "<input type='hidden' name='parent' value='" + parent + "'>"
                     })
                 })
-}
-            })          
+
+                
+            })
     </script>
     <script>
-       
         fetch('food.json')
             .then(response => response.json())
-            .then(data => {                
+            .then(data => {
                 //will write to modal
-
+                for (let i = 0; i < 3; i++) {
+                    document.getElementById('category').innerHTML += "<option value='" + i + "'>" + data.starters[i].name + "</option>"
+                }
             });
-        
+        document.getElementById('modalForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            console.log(formData.get("parent"))
+        })
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
