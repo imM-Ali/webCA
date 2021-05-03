@@ -1,0 +1,15 @@
+{
+    
+    "starters":[
+      {"name":"Onion Bhaji", "description":"Onions", "isVeg": true, "price": 3.99},
+      {"name":"Chicken Wings", "description":"Chicks", "isVeg": false, "price": 2.99},
+      {"name":"Curry soup", "description":"Soup", "isVeg": true, "price": 4.25}
+    ],
+    "mains":[
+        {"name":"Lamb Biryani", "description":"rice", "isVeg": false, "price": 5.99},
+        {"name":"Mustard Stuffed Chicken", "description":"chick", "isVeg": false, "price": 7.99},
+        {"name":"Veg Lasagne", "description":"veggies", "isVeg": false, "price": 3.99}    
+    ]
+
+
+}

@@ -9,7 +9,10 @@ body{
     opacity: 95%;
    
 }
-
+#close{
+   position: relative;
+   top: 90%;
+}
 .card-link{
     color: gray;
     font-weight: 400;
@@ -18,8 +21,26 @@ body{
 .card-link:hover{
     color: black;
   }
+.myModal{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.7); 
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
 
 
+.content{
+    width:90%;
+    height: 85%;
+    background-color: white ;
+    border-radius: 9px;
+    text-align: center;
+}
 
 .row{
     justify-content: center;
@@ -34,9 +55,7 @@ body{
     visibility:hidden;
     align-self: flex-end;
 }
-.form-group{
-    text-align: end;
-}
+
 .form-control{
     border:none;        
 }
