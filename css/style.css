@@ -61,20 +61,40 @@ html {
 .cart-btn {
     font-size: 1em;
     position: absolute;
-    left: 45%;
+    right: 30px;
 }
 
 #section2 {
     background: rgba(255, 255, 255, 0.8);
-    margin-bottom: 15px;
+    margin: 15px 0px;
+    visibility: hidden;
 }
 
 .row {
     padding: 50px 25px
 }
 
+.cart-price {
+    font-size: 0.7em;
+}
+
 #mNature,
 #sNature {
     display: inline-block;
     font-size: 0.8em;
+}
+
+#invokeBtn {
+    margin-top: 25px;
+    margin-left: 0;
+}
+
+@media (min-width: 576px) {
+    #invokeBtn {
+        margin-left: 50%;
+    }
+}
+
+.cart-total {
+    font-size: 0.7em;
 }

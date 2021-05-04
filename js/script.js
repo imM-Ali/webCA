@@ -58,7 +58,7 @@ nxtBtn.addEventListener('click', (e) => {
                         "<ul class='list-group list-group-flush'><li class='list-group-item'>" + data.results[i].email + "</li></ul>" +
                         "</div></div>"
                     document.getElementById('section1').innerHTML += customer;
-
+                    document.getElementById('section2').style.visibility = 'visible';
                 }
 
             })
@@ -70,90 +70,26 @@ nxtBtn.addEventListener('click', (e) => {
  * Part 3
  */
 
-//creating food objects 
-var Starters = [{
-        "name": "Onion Bhaji",
-        "description": "Onions",
-        "isVeg": true,
-        "price": 3.99
-    },
-    {
-        "name": "Chicken Wings",
-        "description": "Chicks",
-        "isVeg": false,
-        "price": 2.99
-    },
-    {
-        "name": "Curry soup",
-        "description": "Soup",
-        "isVeg": true,
-        "price": 4.25
-    }
-]
-var Drinks = [{
-        "name": "Sprite",
-        "description": "Clear",
-        "price": 1.99
-    },
-    {
-        "name": "Coke",
-        "description": "Cola",
-        "price": 2.99
-    },
-    {
-        "name": "Fanta",
-        "description": "Funky",
-        "price": 1.25
-    }
-]
-var Mains = [{
-        "name": "Lamb Biryani",
-        "description": "rice",
-        "isVeg": false,
-        "price": 5.99
-    },
-    {
-        "name": "Mustard Stuffed Chicken",
-        "description": "chick",
-        "isVeg": false,
-        "price": 7.99
-    },
-    {
-        "name": "Veg Lasagne",
-        "description": "veggies",
-        "isVeg": true,
-        "price": 3.99
-    }
+//getting food objects and populating menu 
 
-]
-var Desserts = [{
-        "name": "Kheer",
-        "description": "rice",
-        "isVeg": false,
-        "price": 5.99
-    },
-    {
-        "name": "Firni",
-        "description": "chick",
-        "isVeg": false,
-        "price": 7.99
-    },
-    {
-        "name": "Or nahi pta",
-        "description": "veggies",
-        "isVeg": true,
-        "price": 3.99
-    }
-]
 
 fetch('food.json').then(response => response.json()).then(data => {
     var startersfoodContainer = document.getElementsByClassName('starters')[0];
     var mainsfoodContainer = document.getElementsByClassName('mains')[0];
+    var dessertsfoodContainer = document.getElementsByClassName('desserts')[0];
+    var drinksfoodContainer = document.getElementsByClassName('drinks')[0];
+
     data.starters.forEach(element => {
         startersfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="starters" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
     })
     data.mains.forEach(element => {
         mainsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="mains" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
+    })
+    data.desserts.forEach(element => {
+        dessertsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="desserts" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
+    })
+    data.drinks.forEach(element => {
+        drinksfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="drinks" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
     })
 
 }).then(() => {
@@ -172,21 +108,51 @@ document.getElementById('invokeBtn').addEventListener('click', () => {
 })
 
 function addToCart(name, price) {
-    var cart = document.getElementById('cart');
-    cart.innerHTML += `<div class="cart-item">${name} :
-    <span class="cart-price">${price}</span>
-    <input class="cart-quantity" type="number" min="0" max="5">
-</div>`
+    if (preventMultiple(name) == name) {
+        increaseQuantity(name);
+    } else {
+        var cart = document.getElementById('cart');
+        cart.innerHTML += `<div class="cart-item mt-2 mb-4">
+    <span class="cart-name">${name}</span>    
+    <input class="cart-quantity" placeholder="0" type="number" min="0" max="5">
+    <span class="cart-price">${price} /pc</span>
+    </div>`
+    }
+}
+
+function increaseQuantity(name) {
+    var cartitems = document.getElementsByClassName('cart-item')
+    for (var i = 0; i < cartitems.length; i++) {
+        var cartName = cartitems[i].getElementsByClassName('cart-name')[0].innerText;;
+        if (cartName == name) {
+            if (cartitems[i].getElementsByClassName('cart-quantity')[0].value < 5) {
+                cartitems[i].getElementsByClassName('cart-quantity')[0].value++;
+            }
+        }
+
+    }
 }
 
 function updatePrice() {
     var cartitems = document.getElementsByClassName('cart-item')
     total = 0;
     for (var i = 0; i < cartitems.length; i++) {
-        var cartItem = cartitems[i];
-        var price = cartItem.getElementsByClassName('cart-price')[0].innerText;
-        var quantity = cartItem.getElementsByClassName('cart-quantity')[0].value;
+        var price = cartitems[i].getElementsByClassName('cart-price')[0].innerText;
+        price.replace(' /pc', '');
+        var quantity = cartitems[i].getElementsByClassName('cart-quantity')[0].value;
         total = total + (parseFloat(price) * quantity)
+        total = Math.round(total)
     }
-    document.getElementsByClassName('cart-total')[0].innerHTML = total;
+    document.getElementsByClassName('cart-total')[0].innerHTML = `Total: € ${total} `;
+}
+
+function preventMultiple(name) {
+    var cartItems = document.getElementsByClassName('cart-item')
+    for (var i = 0; i < cartItems.length; i++) {
+        var cartName = cartItems[i].getElementsByClassName('cart-name')[0].innerText;
+        if (cartName == name) {
+            return cartName;
+        }
+    }
+
 }
