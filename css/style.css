@@ -58,10 +58,16 @@ html {
     padding: 0px 10px;
 }
 
-.cart-btn {
+.add-to-cart-btn {
     font-size: 1em;
     position: absolute;
     right: 30px;
+}
+
+.remove-btn {
+    font-size: 1em;
+    position: absolute;
+    right: 70px;
 }
 
 #section2 {
@@ -84,17 +90,31 @@ html {
     font-size: 0.8em;
 }
 
-#invokeBtn {
+
+/* #invokeBtn {
     margin-top: 25px;
     margin-left: 0;
-}
+} */
 
-@media (min-width: 576px) {
+
+/* @media (min-width: 576px) {
     #invokeBtn {
         margin-left: 50%;
     }
-}
+} */
 
 .cart-total {
-    font-size: 0.7em;
+    font-size: 14px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+
+.action-btn {
+    margin-left: 20px;
 }

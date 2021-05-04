@@ -80,27 +80,31 @@ fetch('food.json').then(response => response.json()).then(data => {
     var drinksfoodContainer = document.getElementsByClassName('drinks')[0];
 
     data.starters.forEach(element => {
-        startersfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="starters" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
+        startersfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="starters" class="menu-item form-group"><strong>${element.name}</strong>  <span class="remove-btn btn btn-secondary">-</span>  <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
     })
     data.mains.forEach(element => {
-        mainsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="mains" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
+        mainsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="mains" class="menu-item form-group"><strong>${element.name}</strong> <span class="remove-btn btn btn-secondary">-</span> <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
     })
     data.desserts.forEach(element => {
-        dessertsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="desserts" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
+        dessertsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="desserts" class="menu-item form-group"><strong>${element.name}</strong>  <span class="remove-btn btn btn-secondary">-</span>  <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
     })
     data.drinks.forEach(element => {
-        drinksfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="drinks" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
+        drinksfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="drinks" class="menu-item form-group"><strong>${element.name}</strong>  <span class="remove-btn btn btn-secondary">-</span>  <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
     })
 
 }).then(() => {
-    document.querySelectorAll('.cart-btn').forEach(item => {
+    document.querySelectorAll('.add-to-cart-btn').forEach(item => {
         item.addEventListener('click', (e) => {
             var itemName = e.target.parentElement.dataset.name;
             var itemPrice = e.target.parentElement.dataset.price;
-            var itemType = e.target.parentElement.dataset.type;
-            addToCart(itemName, itemPrice, itemType);
+            addToCart(itemName, itemPrice);
         })
-    })
+    });
+    document.querySelectorAll('.remove-btn').forEach(item => {
+        item.addEventListener('click', (e) => {
+            decreaseQuantity(e.target.parentElement.dataset.name);
+        })
+    });
 })
 
 document.getElementById('invokeBtn').addEventListener('click', () => {
@@ -108,13 +112,13 @@ document.getElementById('invokeBtn').addEventListener('click', () => {
 })
 
 function addToCart(name, price) {
-    if (preventMultiple(name) == name) {
+    if (alreadyExists(name) == name) {
         increaseQuantity(name);
     } else {
         var cart = document.getElementById('cart');
         cart.innerHTML += `<div class="cart-item mt-2 mb-4">
     <span class="cart-name">${name}</span>    
-    <input class="cart-quantity" placeholder="0" type="number" min="0" max="5">
+    <input class="cart-quantity" placeholder="0" type="number" min="0" max="5" readOnly>
     <span class="cart-price">${price} /pc</span>
     </div>`
     }
@@ -127,6 +131,19 @@ function increaseQuantity(name) {
         if (cartName == name) {
             if (cartitems[i].getElementsByClassName('cart-quantity')[0].value < 5) {
                 cartitems[i].getElementsByClassName('cart-quantity')[0].value++;
+            }
+        }
+
+    }
+}
+
+function decreaseQuantity(name) {
+    var cartitems = document.getElementsByClassName('cart-item')
+    for (var i = 0; i < cartitems.length; i++) {
+        var cartName = cartitems[i].getElementsByClassName('cart-name')[0].innerText;;
+        if (cartName == name) {
+            if (cartitems[i].getElementsByClassName('cart-quantity')[0].value > 0) {
+                cartitems[i].getElementsByClassName('cart-quantity')[0].value--
             }
         }
 
@@ -146,7 +163,7 @@ function updatePrice() {
     document.getElementsByClassName('cart-total')[0].innerHTML = `Total: € ${total} `;
 }
 
-function preventMultiple(name) {
+function alreadyExists(name) {
     var cartItems = document.getElementsByClassName('cart-item')
     for (var i = 0; i < cartItems.length; i++) {
         var cartName = cartItems[i].getElementsByClassName('cart-name')[0].innerText;
