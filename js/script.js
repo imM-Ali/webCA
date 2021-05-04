@@ -1,4 +1,6 @@
-/*PART 1*/
+/**
+ * Part 1
+ */
 
 var errorEle = document.getElementById('error');
 var password = document.getElementById('pass');
@@ -35,47 +37,40 @@ password.addEventListener('keyup', function() {
     }
 
 });
-//prevents form submission if there is an error message
+/**
+ * Part 2
+ */
 
 nxtBtn.addEventListener('click', (e) => {
-        if (errMsg != "") {
-            e.preventDefault();
-        } else {
-            document.querySelector('.nav-link').innerHTML = "Customers"
-            fetch('https://randomuser.me/api/?results=5&inc=name,picture,email')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('content').innerHTML = "";
-                    for (let i = 0; i < 5; i++) {
-                        var customer = " <div id='user_" + (i + 1) + "' class='col-lg-6 col-md-12' style='text-align: -webkit-center;'>" +
-                            "<div class='card mb-5 shadow rounded' style='width: 20rem;''>" +
-                            "<img class='card-img-top' style='width:60%; align-self: center; margin-top:5px' src='" + data.results[i].picture.large + "'>" +
-                            "<div class='card-body'><h5 class='card-title'>" + data.results[i].name.first + " " + data.results[i].name.last + "</h5></div>" +
-                            "<ul class='list-group list-group-flush'><li class='list-group-item'>" + data.results[i].email + "</li></ul>" +
-                            "</div></div>"
-                        document.getElementById('content').innerHTML += customer;
+    if (errMsg != "") {
+        e.preventDefault();
+    } else {
+        document.querySelector('.nav-link').innerHTML = "Customers";
+        fetch('https://randomuser.me/api/?results=5&inc=name,picture,email')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('section1').innerHTML = "";
+                for (let i = 0; i < 5; i++) {
+                    var customer = " <div id='user_" + (i + 1) + "' class='col-lg-6 col-md-12' style='text-align: -webkit-center;'>" +
+                        "<div class='card mb-5 shadow rounded' style='width: 20rem;''>" +
+                        "<img class='card-img-top' style='width:60%; align-self: center; margin-top:5px' src='" + data.results[i].picture.large + "'>" +
+                        "<div class='card-body'><h5 class='card-title'>" + data.results[i].name.first + " " + data.results[i].name.last + "</h5></div>" +
+                        "<ul class='list-group list-group-flush'><li class='list-group-item'>" + data.results[i].email + "</li></ul>" +
+                        "</div></div>"
+                    document.getElementById('section1').innerHTML += customer;
 
-                    }
+                }
 
-                    //!!!!!!!!!!!!!!!!!!!!   FORM SECTION    !!!!!!!!!!!!!!!!!!!!!!!
+            })
+    }
 
-                }).then(() => {
+})
 
-                    document.querySelector('.formSection').removeAttribute("hidden");
-                    document.getElementById('scrollToMe').scrollIntoView();
+/**
+ * Part 3
+ */
 
-                    //populating drop down menus
-                    for (let i = 0; i < Starters.length; i++) {
-                        document.getElementById('starters').innerHTML += "<option value='" + JSON.stringify(Starters[i]) + "'>" + Starters[i].name + "</option>"
-                        document.getElementById('mains').innerHTML += "<option value='" + JSON.stringify(Mains[i]) + "'>" + Mains[i].name + "</option>"
-                        document.getElementById('drinks').innerHTML += "<option value='" + JSON.stringify(Drinks[i]) + "'>" + Drinks[i].name + "</option>"
-                    }
-                })
-
-        }
-
-    })
-    //creating food objects 
+//creating food objects 
 var Starters = [{
         "name": "Onion Bhaji",
         "description": "Onions",
@@ -112,100 +107,86 @@ var Drinks = [{
     }
 ]
 var Mains = [{
-            "name": "Lamb Biryani",
-            "description": "rice",
-            "isVeg": false,
-            "price": 5.99
-        },
-        {
-            "name": "Mustard Stuffed Chicken",
-            "description": "chick",
-            "isVeg": false,
-            "price": 7.99
-        },
-        {
-            "name": "Veg Lasagne",
-            "description": "veggies",
-            "isVeg": true,
-            "price": 3.99
-        }
+        "name": "Lamb Biryani",
+        "description": "rice",
+        "isVeg": false,
+        "price": 5.99
+    },
+    {
+        "name": "Mustard Stuffed Chicken",
+        "description": "chick",
+        "isVeg": false,
+        "price": 7.99
+    },
+    {
+        "name": "Veg Lasagne",
+        "description": "veggies",
+        "isVeg": true,
+        "price": 3.99
+    }
 
-    ]
-    //declaring selected items, will set value later
-var selectedStarterPrice, selectedMainPrice, selectedDrinkPrice, TotalPrice;
-document.querySelector('form').addEventListener('submit', (e) => {
-    //prevents form submission
-    e.preventDefault();
-    document.querySelector('.total').removeAttribute("hidden");
-    //handles if one dropdown is not changed from default value
-    TotalPrice = nanHandler(selectedStarterPrice, selectedMainPrice, selectedDrinkPrice);
-    document.querySelector('.total').innerHTML = "<strong>Total: </strong>" + TotalPrice + "";
-    document.querySelector('#breakDown').removeAttribute("hidden");
-});
+]
+var Desserts = [{
+        "name": "Kheer",
+        "description": "rice",
+        "isVeg": false,
+        "price": 5.99
+    },
+    {
+        "name": "Firni",
+        "description": "chick",
+        "isVeg": false,
+        "price": 7.99
+    },
+    {
+        "name": "Or nahi pta",
+        "description": "veggies",
+        "isVeg": true,
+        "price": 3.99
+    }
+]
 
-function nanHandler(a, b, c) {
-    if (isNaN(a)) {
-        a = 0;
-    }
-    if (isNaN(b)) {
-        b = 0;
-    }
-    if (isNaN(c)) {
-        c = 0;
-    }
-    return a + b + c;
+fetch('food.json').then(response => response.json()).then(data => {
+    var startersfoodContainer = document.getElementsByClassName('starters')[0];
+    var mainsfoodContainer = document.getElementsByClassName('mains')[0];
+    data.starters.forEach(element => {
+        startersfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="starters" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
+    })
+    data.mains.forEach(element => {
+        mainsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="mains" class="menu-item form-group"><strong>${element.name}</strong>  <span class="cart-btn btn btn-secondary">+</span></div>`
+    })
+
+}).then(() => {
+    document.querySelectorAll('.cart-btn').forEach(item => {
+        item.addEventListener('click', (e) => {
+            var itemName = e.target.parentElement.dataset.name;
+            var itemPrice = e.target.parentElement.dataset.price;
+            var itemType = e.target.parentElement.dataset.type;
+            addToCart(itemName, itemPrice, itemType);
+        })
+    })
+})
+
+document.getElementById('invokeBtn').addEventListener('click', () => {
+    updatePrice();
+})
+
+function addToCart(name, price) {
+    var cart = document.getElementById('cart');
+    cart.innerHTML += `<div class="cart-item">${name} :
+    <span class="cart-price">${price}</span>
+    <input class="cart-quantity" type="number" min="0" max="5">
+</div>`
 }
 
-document.getElementById('starters').addEventListener('change', event => {
-
-    var obj = JSON.parse(event.target.value);
-    selectedStarterPrice = obj.price;
-    if (obj.isVeg) {
-        document.getElementById('sNature').innerHTML = " -veg- ";
-    } else {
-        document.getElementById('sNature').innerHTML = "";
+function updatePrice() {
+    var cartitems = document.getElementsByClassName('cart-item')
+    total = 0;
+    for (var i = 0; i < cartitems.length; i++) {
+        var cartItem = cartitems[i];
+        var price = cartItem.getElementsByClassName('cart-price')[0].innerText;
+        var quantity = cartItem.getElementsByClassName('cart-quantity')[0].value;
+        total = total + (parseFloat(price) * quantity)
     }
-    tableWriter(obj, "row_1");
-
-})
-document.getElementById('mains').addEventListener('change', event => {
-
-    var obj = JSON.parse(event.target.value);
-    selectedMainPrice = obj.price;
-    if (obj.isVeg) {
-        document.getElementById('mNature').innerHTML = " -veg- ";
-    } else {
-        document.getElementById('mNature').innerHTML = "";
-    }
-    tableWriter(obj, "row_2");
-})
-
-document.getElementById('drinks').addEventListener('change', event => {
-
-    var obj = JSON.parse(event.target.value);
-    selectedDrinkPrice = obj.price;
-    tableWriter(obj, "row_3");
-
-})
-
-
-function tableWriter(obj, start = "") {
-
-    document.getElementById("" + start + "").innerHTML = "";
-    switch (start) {
-        case "row_1":
-            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Starter</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
-            break;
-        case "row_2":
-            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Main</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
-            break;
-        case "row_3":
-            document.getElementById("" + start + "").innerHTML += "<th scope='row'>Drink</th><td>" + obj.name + "</td><td>" + obj.price + "</td>";
-            break;
-    }
-
-
-
-
-
+    document.getElementsByClassName('cart-total')[0].innerHTML = total;
 }
