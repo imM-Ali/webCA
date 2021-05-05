@@ -1,5 +1,5 @@
 body {
-    background-image: url('../img/background.jpg');
+    background: url('../img/background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     font-family: 'Poppins', sans-serif;
@@ -12,6 +12,10 @@ body {
 
 .passInput {
     margin: 15px 0px;
+}
+
+#mybtn {
+    visibility: hidden;
 }
 
 .card-link {
@@ -50,6 +54,10 @@ body {
     border-bottom: 1px solid lightgreen;
 }
 
+.user-card p {
+    font-size: 12px;
+}
+
 .menu-item {
     padding: 0px 10px;
 }
@@ -66,10 +74,19 @@ body {
     right: 70px;
 }
 
+#section1 {
+    height: 90vh;
+    align-items: center;
+}
+
 #section2 {
+    display: none;
+}
+
+#section3 {
     background: rgba(255, 255, 255, 0.8);
     margin: 15px 0px;
-    visibility: hidden;
+    display: none;
     border-radius: 10px;
 }
 
