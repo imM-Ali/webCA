@@ -6,10 +6,6 @@ body {
     background-attachment: fixed;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 .card {
     opacity: 95%;
 }
@@ -74,6 +70,7 @@ html {
     background: rgba(255, 255, 255, 0.8);
     margin: 15px 0px;
     visibility: hidden;
+    border-radius: 10px;
 }
 
 .row {

@@ -7,8 +7,10 @@ var password = document.getElementById('pass');
 var nxtBtn = document.getElementById('mybtn');
 var errMsg;
 
-//checks the password and sets the error message value accordingly, if no error, then message is empty  
-function check() {
+/**
+ * checks the password and sets the error message value accordingly, if no error, then message is empty  
+ */
+function passwordCheck() {
     errMsg = "";
     if (password.value == null || password.value == "") {
         errMsg = "Password cannot be blank!";
@@ -21,9 +23,11 @@ function check() {
 
     }
 }
-//calls to check password after every keystroke and displays message and styling
+/**
+ * calls to check password after every keystroke and displays message and styling
+ */
 password.addEventListener('keyup', function() {
-    check();
+    passwordCheck();
     errorEle.innerHTML = errMsg;
     errorEle.style.visibility = 'visible';
     if (errMsg != "") {
@@ -50,6 +54,7 @@ nxtBtn.addEventListener('click', (e) => {
             .then(response => response.json())
             .then(data => {
                 document.getElementById('section1').innerHTML = "";
+                //creates a bootstrap cart for each customer to load into
                 for (let i = 0; i < 5; i++) {
                     var customer = " <div id='user_" + (i + 1) + "' class='col-lg-6 col-md-12' style='text-align: -webkit-center;'>" +
                         "<div class='card mb-5 shadow rounded' style='width: 20rem;''>" +
@@ -70,47 +75,81 @@ nxtBtn.addEventListener('click', (e) => {
  * Part 3
  */
 
+//*food items are stored on an external server in a json file*
+
+
 //getting food objects and populating menu 
 
-
-fetch('food.json').then(response => response.json()).then(data => {
+fetch('https://api.jsonbin.io/b/609286acd64cd16802ab0af6/4').then(response => response.json()).then(data => {
     var startersfoodContainer = document.getElementsByClassName('starters')[0];
     var mainsfoodContainer = document.getElementsByClassName('mains')[0];
     var dessertsfoodContainer = document.getElementsByClassName('desserts')[0];
     var drinksfoodContainer = document.getElementsByClassName('drinks')[0];
 
+    //creating a new div for each food item and appending to html
     data.starters.forEach(element => {
-        startersfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="starters" class="menu-item form-group"><strong>${element.name}</strong>  <span class="remove-btn btn btn-secondary">-</span>  <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
+        startersfoodContainer.innerHTML += `
+        <div data-name="${element.name}" data-price="${element.price}" data-type="starters" class="menu-item form-group">
+        <strong>${element.name}</strong><br /> - 
+        <span style="font-size:0.6em">
+         <strong>${element.description}</strong>
+         <span>   
+         <span class="remove-btn btn btn-secondary">-
+         </span>  
+         <span class="add-to-cart-btn btn btn-secondary">+
+         </span>
+         </div>`
     })
     data.mains.forEach(element => {
-        mainsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="mains" class="menu-item form-group"><strong>${element.name}</strong> <span class="remove-btn btn btn-secondary">-</span> <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
+        mainsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="mains" class="menu-item form-group">
+        <strong>${element.name}</strong><br /> - 
+        <span style="font-size:0.6em">
+        <strong>${element.description}</strong>
+        <span> 
+        <span class="remove-btn btn btn-secondary">-
+        </span> 
+        <span class="add-to-cart-btn btn btn-secondary">+
+        </span>
+        </div>`
     })
     data.desserts.forEach(element => {
-        dessertsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="desserts" class="menu-item form-group"><strong>${element.name}</strong>  <span class="remove-btn btn btn-secondary">-</span>  <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
+        dessertsfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="desserts" class="menu-item form-group">
+        <strong>${element.name}</strong><br /> - 
+        <span style="font-size:0.6em">
+        <strong>${element.description}</strong>
+        <span>   
+        <span class="remove-btn btn btn-secondary">-
+        </span>  
+        <span class="add-to-cart-btn btn btn-secondary">+
+        </span>
+        </div>`
     })
     data.drinks.forEach(element => {
-        drinksfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="drinks" class="menu-item form-group"><strong>${element.name}</strong>  <span class="remove-btn btn btn-secondary">-</span>  <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
+        drinksfoodContainer.innerHTML += `<div data-name="${element.name}" data-price="${element.price}" data-type="drinks" class="menu-item form-group"><strong>${element.name}</strong><br /> - <span style="font-size:0.6em"><strong>${element.description}</strong><span>   <span class="remove-btn btn btn-secondary">-</span>  <span class="add-to-cart-btn btn btn-secondary">+</span></div>`
     })
 
 }).then(() => {
     document.querySelectorAll('.add-to-cart-btn').forEach(item => {
         item.addEventListener('click', (e) => {
-            var itemName = e.target.parentElement.dataset.name;
-            var itemPrice = e.target.parentElement.dataset.price;
-            addToCart(itemName, itemPrice);
+            var parentElement = e.target.parentElement.parentElement.parentElement;
+            addToCart(parentElement.dataset.name, parentElement.dataset.price);
         })
     });
     document.querySelectorAll('.remove-btn').forEach(item => {
         item.addEventListener('click', (e) => {
-            decreaseQuantity(e.target.parentElement.dataset.name);
+            var parentElement = e.target.parentElement.parentElement.parentElement;
+            decreaseQuantity(parentElement.dataset.name);
         })
     });
 })
 
-document.getElementById('invokeBtn').addEventListener('click', () => {
+document.getElementById('totalBtn').addEventListener('click', () => {
     updatePrice();
 })
 
+/**
+ * adds an item to the cart
+ */
 function addToCart(name, price) {
     if (alreadyExists(name) == name) {
         increaseQuantity(name);
@@ -123,7 +162,9 @@ function addToCart(name, price) {
     </div>`
     }
 }
-
+/**
+ * increases cart item quantity by 1
+ */
 function increaseQuantity(name) {
     var cartitems = document.getElementsByClassName('cart-item')
     for (var i = 0; i < cartitems.length; i++) {
@@ -136,11 +177,13 @@ function increaseQuantity(name) {
 
     }
 }
-
+/**
+ * decreases cart item quantity by 1
+ */
 function decreaseQuantity(name) {
     var cartitems = document.getElementsByClassName('cart-item')
     for (var i = 0; i < cartitems.length; i++) {
-        var cartName = cartitems[i].getElementsByClassName('cart-name')[0].innerText;;
+        var cartName = cartitems[i].getElementsByClassName('cart-name')[0].innerText;
         if (cartName == name) {
             if (cartitems[i].getElementsByClassName('cart-quantity')[0].value > 0) {
                 cartitems[i].getElementsByClassName('cart-quantity')[0].value--
@@ -150,6 +193,9 @@ function decreaseQuantity(name) {
     }
 }
 
+/**
+ * updates the total to the current total of cart items
+ */
 function updatePrice() {
     var cartitems = document.getElementsByClassName('cart-item')
     total = 0;
@@ -163,6 +209,9 @@ function updatePrice() {
     document.getElementsByClassName('cart-total')[0].innerHTML = `Total: € ${total} `;
 }
 
+/**
+ * checks to see if an item is already present in cart, if present, it will return the item
+ */
 function alreadyExists(name) {
     var cartItems = document.getElementsByClassName('cart-item')
     for (var i = 0; i < cartItems.length; i++) {
@@ -172,4 +221,27 @@ function alreadyExists(name) {
         }
     }
 
+}
+document.getElementById('checkout-btn').addEventListener('click', () => {
+    var billItems = checkout();
+
+})
+
+
+
+/**
+ * returns an array of names and quantities of products present in the cart at the time of checkout
+ * index 0,2,4... are product names and 1,3,5... are the quantites of product in previous index
+ */
+function checkout() {
+    var cartItems = document.getElementsByClassName('cart-item');
+    console.log(cartItems)
+    var checkoutCart = [];
+    for (var i = 0; i < cartItems.length; i++) {
+        var cartName = cartItems[i].getElementsByClassName('cart-name')[0].innerText;
+        var quantity = cartItems[i].getElementsByClassName('cart-quantity')[0].value;
+        checkoutCart.push(cartName);
+        checkoutCart.push(quantity);
+    }
+    return checkoutCart;
 }
