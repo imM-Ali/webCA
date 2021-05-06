@@ -71,7 +71,7 @@ nxtBtn.addEventListener('click', (e) => {
  * Part 3
  */
 
-//*food items are stored on an external server in a json file*
+//*food items are stored on an external server in a json file (because local json cannot be loaded without live server*
 
 //getting food objects and populating menu 
 fetch('https://api.jsonbin.io/b/609286acd64cd16802ab0af6/4').then(response => response.json()).then(data => {
@@ -84,7 +84,7 @@ fetch('https://api.jsonbin.io/b/609286acd64cd16802ab0af6/4').then(response => re
     function populate(element, foodContainer) {
         //populating menu
         foodContainer.innerHTML += `
-        <div data-name="${element.name}" data-price="${element.price}" data-type="starters" class="menu-item form-group">
+        <div data-name="${element.name}" class="menu-item form-group">
         <strong>${element.name}</strong><br /> - 
         <span style="font-size:0.6em">
          <strong>${element.description}</strong>
@@ -96,7 +96,7 @@ fetch('https://api.jsonbin.io/b/609286acd64cd16802ab0af6/4').then(response => re
          </div>`;
         //populating cart - hidden on initital state
         var cart = document.getElementById('cart');
-        cart.innerHTML += `<div class="cart-item mt-2 mb-4 d-none">
+        cart.innerHTML += `<div data-type="${foodContainer.classList[0]}" class="cart-item mt-2 mb-4 d-none">
         <span class="cart-name">${element.name}</span>    
         <input class="cart-quantity" placeholder="0" type="number" min="0" max="5" readOnly>
         <span class="cart-price">${element.price} /pc</span>
@@ -118,22 +118,20 @@ fetch('https://api.jsonbin.io/b/609286acd64cd16802ab0af6/4').then(response => re
 
 }).then(() => {
     document.querySelectorAll('.add-to-cart-btn').forEach(item => {
-        item.addEventListener('click', (e) => {
-            var parentElement = e.target.parentElement.parentElement.parentElement;
+        item.addEventListener('click', (event) => {
+            var parentElement = event.target.parentElement.parentElement.parentElement;
             cartHandler(parentElement.dataset.name);
         })
     });
     document.querySelectorAll('.remove-btn').forEach(item => {
-        item.addEventListener('click', (e) => {
-            var parentElement = e.target.parentElement.parentElement.parentElement;
+        item.addEventListener('click', (event) => {
+            var parentElement = event.target.parentElement.parentElement.parentElement;
             cartHandler(parentElement.dataset.name, "remove");
         })
     });
 })
 
-document.getElementById('totalBtn').addEventListener('click', () => {
-    updatePrice();
-})
+document.getElementById('totalBtn').addEventListener('click', updatePrice)
 
 /**
  * unhides the clicked product in cart
@@ -141,19 +139,23 @@ document.getElementById('totalBtn').addEventListener('click', () => {
 function cartHandler(name, action = "add") {
     var cartItems = document.getElementsByClassName('cart-item')
     for (var i = 0; i < cartItems.length; i++) {
-        var cartName = cartItems[i].getElementsByClassName('cart-name')[0].innerText;
-        if (cartName == name) {
+        var cartItemName = cartItems[i].getElementsByClassName('cart-name')[0].innerText;
+        if (cartItemName == name) {
+            //unhides the passed element in the cart
             cartItems[i].classList.remove('d-none')
                 //increases cart item quantity by 1
+            var currentQuantity = cartItems[i].getElementsByClassName('cart-quantity')[0];
             if (action == "add") {
-                if (cartItems[i].getElementsByClassName('cart-quantity')[0].value < 5) {
-                    cartItems[i].getElementsByClassName('cart-quantity')[0].value++;
+                //limits each items quantity in cart to 5
+                if (currentQuantity.value < 5) {
+                    currentQuantity.value++;
                 }
             } else {
-                if (cartItems[i].getElementsByClassName('cart-quantity')[0].value > 1) {
-                    cartItems[i].getElementsByClassName('cart-quantity')[0].value--
+                if (currentQuantity.value > 1) {
+                    currentQuantity.value--
+                        //removes item from cart if quantity is 0       
                 } else {
-                    cartItems[i].getElementsByClassName('cart-quantity')[0].value = 0;
+                    currentQuantity.value = 0;
                     cartItems[i].classList.add('d-none')
                 }
             }
@@ -182,9 +184,8 @@ function updatePrice() {
 
 document.getElementById('checkout-btn').addEventListener('click', () => {
     var billItems = checkout();
-
+    console.log(billItems)
 })
-
 
 /**
  * returns an array of names and quantities of products present in the cart at the time of checkout
@@ -192,13 +193,13 @@ document.getElementById('checkout-btn').addEventListener('click', () => {
  */
 function checkout() {
     var cartItems = document.getElementsByClassName('cart-item');
-    console.log(cartItems)
     var checkoutCart = [];
     for (var i = 0; i < cartItems.length; i++) {
-        var cartName = cartItems[i].getElementsByClassName('cart-name')[0].innerText;
-        var quantity = cartItems[i].getElementsByClassName('cart-quantity')[0].value;
-        checkoutCart.push(cartName);
-        checkoutCart.push(quantity);
+        //pushes only the items that are visible in the cart
+        if (!cartItems[i].classList.contains("d-none")) {
+            checkoutCart.push(cartItems[i].getElementsByClassName('cart-name')[0].innerText);
+            checkoutCart.push(cartItems[i].getElementsByClassName('cart-quantity')[0].value);
+        }
     }
     return checkoutCart;
 }
