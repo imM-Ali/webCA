@@ -14,22 +14,19 @@
 </head>
 
 <body>
-    <!-- Image and text -->
-    <!-- <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""> Bootstrap
-        </a>
-    </nav> -->
+    <header class="header">
+        <div class="header_item">
+            <a href="#"><img style="height: 15vh;" src="/img/brand.png" /></a>
+        </div>
+    </header>
     <div class="container">
 
         <!--this section will show password input, and hide after correct input-->
         <div id="section1" class="row">
-            <div class="col-7 rounded shadow align-center">
-                <div class="passInput">
-                    <input type="password" class="form-control" id="pass" placeholder="Password">
-                    <small id="error"></small>
-                </div>
-                <button class="btn btn-primary mb-3" id="mybtn">Proceed</button>
+            <div class="col-6 align-center">
+                <input type="password" class="form-control" id="pass" placeholder="Password">
+                <button class="btn btn-light mt-2" id="mybtn">Proceed</button>
+                <small id="error"></small>
             </div>
         </div>
         <!--this section will show customers, and only show after correct password-->
@@ -43,37 +40,80 @@
                     <form class="menu">
                         <div class="starters mt-2 mb-4">
                             <label>Starters</label>
+                            <hr>
 
                         </div>
                         <div class="mains mt-2 mb-4">
                             <label>Mains</label>
+                            <hr>
                         </div>
                         <div class="desserts mt-2 mb-4">
                             <label>Desserts</label>
+                            <hr>
 
                         </div>
                         <div class="drinks mt-2 mb-4">
                             <label>Drinks</label>
+                            <hr>
 
                         </div>
                     </form>
 
                 </div>
                 <div id="cart" class="col-lg-6 col-sm-12">
-                    <h5>Your Cart
-
-                    </h5>
+                    <h5>Your Cart</h5>
+                    <hr>
 
                 </div>
             </div>
+
             <div class="actions">
                 <strong><span class="cart-total pl-5"></span></strong>
-                <button id="totalBtn" class="btn btn-secondary action-btn">Get Total</button>
                 <button id="checkout-btn" class="btn btn-secondary action-btn">Checkout</button>
+            </div>
+            <!-- displays breakdown of cart total -->
+            <div class="d-flex justify-content-center pb-5">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item Type</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Starters</th>
+                            <td id="startersTotal"></td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">Mains</th>
+                            <td id="mainsTotal"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Desserts</th>
+                            <td id="dessertsTotal"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Drinks</th>
+                            <td id="drinksTotal"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
     </div>
+    <footer class="bg-dark text-center text-white">
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2021 Copyright:
+            <a class="text-white" href="www.cct.ie">www.cct.ie</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
 
 
     <script src="js/script.js"></script>

@@ -1,13 +1,14 @@
 body {
-    background: url('../img/background.jpg');
+    background: url('../img/back2.svg');
     background-size: cover;
     background-repeat: no-repeat;
     font-family: 'Poppins', sans-serif;
-    background-attachment: fixed;
 }
 
 .card {
     opacity: 95%;
+    height: 50vh;
+    border: none;
 }
 
 .passInput {
@@ -16,31 +17,26 @@ body {
 
 #mybtn {
     visibility: hidden;
+    background-color: transparent;
+    border-radius: 5px;
+    color: cornsilk;
 }
 
-.card-link {
-    color: gray;
-    font-weight: 400;
-    text-decoration: underline;
-}
-
-.card-link:hover {
+#mybtn:hover {
+    background-color: whitesmoke;
     color: black;
-}
-
-.row {
-    justify-content: center;
-}
-
-.nav-link {
-    font-weight: 500;
-    font-size: 1.3em;
-    color: black !important;
 }
 
 #error {
     visibility: hidden;
-    align-self: flex-end;
+    vertical-align: top;
+    position: absolute;
+    left: 0;
+    margin-left: 17px
+}
+
+.row {
+    justify-content: center;
 }
 
 .form-control {
@@ -54,8 +50,18 @@ body {
     border-bottom: 1px solid lightgreen;
 }
 
+.btn-secondary {
+    background-color: #2a2e33;
+}
+
 .user-card p {
     font-size: 12px;
+    text-align: center;
+}
+
+.user-card h5 {
+    font-size: 16px;
+    text-align: center;
 }
 
 .menu-item {
@@ -75,7 +81,7 @@ body {
 }
 
 #section1 {
-    height: 90vh;
+    height: 74vh;
     align-items: center;
 }
 

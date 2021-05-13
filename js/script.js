@@ -2,10 +2,10 @@
  * Part 1
  */
 
-var errorEle = document.getElementById('error');
-var password = document.getElementById('pass');
-var nxtBtn = document.getElementById('mybtn');
-var errMsg;
+let errorEle = document.getElementById('error');
+let password = document.getElementById('pass');
+let nxtBtn = document.getElementById('mybtn');
+let errMsg;
 
 /**
  * checks the password and sets the error message value accordingly, if no error, then message is empty
@@ -41,24 +41,28 @@ password.addEventListener('keyup', function() {
     }
 
 });
+
 /**
  * Part 2
  */
 
+/**
+ * fetches the random users from API and displays it if no error was found in password
+ */
 nxtBtn.addEventListener('click', (e) => {
     if (errMsg != "") {
         e.preventDefault();
     } else {
-        // document.querySelector('.nav-link').innerHTML = "Customers";
+
         fetch('https://randomuser.me/api/?results=5&inc=name,picture,email').then(response => response.json()).then(data => {
             document.getElementById('section1').style.display = 'none';
             //creates a bootstrap cart for each customer to load into
             for (let i = 0; i < 5; i++) {
-                var customer = "<div id='user_" + (i + 1) + "' class='col-lg-3 col-md-4 user-card'>" +
-                    "<div class='card mb-5 shadow rounded'>" +
+                let customer = "<div id='user_" + (i + 1) + "' class='col-lg-3 col-md-4 col-sm-6 user-card'>" +
+                    "<div class='card mb-5 mt-5 shadow rounded'>" +
                     "<img class='card-img-top' src='" + data.results[i].picture.large + "'>" +
                     "<div class='card-body p-2'><h5 class='card-title'>" + data.results[i].name.first + " " + data.results[i].name.last + "</h5>" +
-                    "<p>" + data.results[i].email + "</p></div>"
+                    "<p>" + data.results[i].email + "</p></div><hr>"
                 document.getElementById('section2').innerHTML += customer;
                 document.getElementById('section2').style.display = 'flex';
                 document.getElementById('section3').style.display = 'block';
@@ -72,22 +76,20 @@ nxtBtn.addEventListener('click', (e) => {
  */
 
 //*food items are stored on an external server in a json file (because local json cannot be loaded without live server*
-
 //getting food objects and populating menu 
 fetch('https://api.jsonbin.io/b/609286acd64cd16802ab0af6/4').then(response => response.json()).then(data => {
-    var startersfoodContainer = document.getElementsByClassName('starters')[0];
-    var mainsfoodContainer = document.getElementsByClassName('mains')[0];
-    var dessertsfoodContainer = document.getElementsByClassName('desserts')[0];
-    var drinksfoodContainer = document.getElementsByClassName('drinks')[0];
-
-    //creating a new div for each food item and appending to html
-    function populate(element, foodContainer) {
-        //populating menu
-        foodContainer.innerHTML += `
-        <div data-name="${element.name}" class="menu-item form-group">
-        <strong>${element.name}</strong><br /> - 
+            /**
+             * takes the food object and the name of container where it will be appended
+             */
+            function populate(object, ContainerName) {
+                let foodContainer = document.getElementsByClassName(ContainerName)[0];
+                //populating menu  
+                // adds the 'vegetarian' tag if object.isVeg property is true in line 90      
+                foodContainer.innerHTML += `        
+        <div data-name="${object.name}" class="menu-item  form-group">
+        <strong>${object.name} ${object.isVeg?`<span class="text-success" style="font-size:0.6em">- Vegetarian<span>`:''}</strong><br /> - 
         <span style="font-size:0.6em">
-         <strong>${element.description}</strong>
+         <strong>${object.description}</strong>
          <span>   
          <span class="remove-btn btn btn-secondary">-
          </span>  
@@ -95,66 +97,66 @@ fetch('https://api.jsonbin.io/b/609286acd64cd16802ab0af6/4').then(response => re
          </span>
          </div>`;
         //populating cart - hidden on initital state
-        var cart = document.getElementById('cart');
+        let cart = document.getElementById('cart');
         cart.innerHTML += `<div data-type="${foodContainer.classList[0]}" class="cart-item mt-2 mb-4 d-none">
-        <span class="cart-name">${element.name}</span>    
+        <span class="cart-name">${object.name}</span>    
         <input class="cart-quantity" placeholder="0" type="number" min="0" max="5" readOnly>
-        <span class="cart-price">${element.price} /pc</span>
+        <span class="cart-price">${object.price} /pc</span>
         </div>`
     }
-
-    data.starters.forEach(element => {
-        populate(element, startersfoodContainer);
-    })
-    data.mains.forEach(element => {
-        populate(element, mainsfoodContainer);
-    })
-    data.desserts.forEach(element => {
-        populate(element, dessertsfoodContainer);
-    })
-    data.drinks.forEach(element => {
-        populate(element, drinksfoodContainer);
+    //calling populate method on the data returned from the JSON
+    Object.entries(data).forEach((category) => {
+        //category 0 has the category names and category 1 has the objects
+        category[1].forEach((item) => {
+            populate(item, category[0])
+        })
     })
 
 }).then(() => {
     document.querySelectorAll('.add-to-cart-btn').forEach(item => {
         item.addEventListener('click', (event) => {
-            var parentElement = event.target.parentElement.parentElement.parentElement;
+            //gets the name of product corresponding the add button which is clicked and passes it to cart handler
+            let parentElement = event.target.parentElement.parentElement.parentElement;
             cartHandler(parentElement.dataset.name);
         })
     });
     document.querySelectorAll('.remove-btn').forEach(item => {
         item.addEventListener('click', (event) => {
-            var parentElement = event.target.parentElement.parentElement.parentElement;
+            //gets the name of product corresponding the delete button which is clicked and passes it to cart handler with the action 'remove'
+            let parentElement = event.target.parentElement.parentElement.parentElement;
             cartHandler(parentElement.dataset.name, "remove");
         })
     });
 })
 
-document.getElementById('totalBtn').addEventListener('click', updatePrice)
-
 /**
- * unhides the clicked product in cart
+ * --unhides the clicked product in cart--
+ * By default, any product passed in params will be added to cart.
+ * To remove, you have to pass "remove" with the to-be removed element
  */
-function cartHandler(name, action = "add") {
-    var cartItems = document.getElementsByClassName('cart-item')
-    for (var i = 0; i < cartItems.length; i++) {
-        var cartItemName = cartItems[i].getElementsByClassName('cart-name')[0].innerText;
-        if (cartItemName == name) {
-            //unhides the passed element in the cart
-            cartItems[i].classList.remove('d-none')
-                //increases cart item quantity by 1
-            var currentQuantity = cartItems[i].getElementsByClassName('cart-quantity')[0];
+function cartHandler(passedName, action = "add") {
+    let cartItems = document.getElementsByClassName('cart-item')
+    for (let i = 0; i < cartItems.length; i++) {
+        let cartItemName = cartItems[i].getElementsByClassName('cart-name')[0].innerText;
+        //unhide the element in the cart if its name matches the passed name
+        if (cartItemName == passedName) {
+            cartItems[i].classList.remove('d-none');
+            let currentQuantity = cartItems[i].getElementsByClassName('cart-quantity')[0];
+
+            //if the action is add       
             if (action == "add") {
                 //limits each items quantity in cart to 5
                 if (currentQuantity.value < 5) {
                     currentQuantity.value++;
                 }
+
+                //if the action is delete
             } else {
+                //if item current value greater than 1, decrease 1
                 if (currentQuantity.value > 1) {
                     currentQuantity.value--
-                        //removes item from cart if quantity is 0       
                 } else {
+                    //removes item from cart   
                     currentQuantity.value = 0;
                     cartItems[i].classList.add('d-none')
                 }
@@ -165,41 +167,48 @@ function cartHandler(name, action = "add") {
 
 }
 
-/**
- * updates the total to the current total of cart items
- */
-function updatePrice() {
-    var cartitems = document.getElementsByClassName('cart-item')
-    total = 0;
-    for (var i = 0; i < cartitems.length; i++) {
-        var price = cartitems[i].getElementsByClassName('cart-price')[0].innerText;
-        price.replace(' /pc', '');
-        var quantity = cartitems[i].getElementsByClassName('cart-quantity')[0].value;
-        total = total + (parseFloat(price) * quantity)
-        total = Math.round(total)
-    }
-    document.getElementsByClassName('cart-total')[0].innerHTML = `Total: € ${total} `;
-}
 
-
-document.getElementById('checkout-btn').addEventListener('click', () => {
-    var billItems = checkout();
-    console.log(billItems)
-})
+document.getElementById('checkout-btn').addEventListener('click', checkout);
 
 /**
- * returns an array of names and quantities of products present in the cart at the time of checkout
- * index 0,2,4... are product names and 1,3,5... are the quantites of product in previous index
+ * Calculates and displays the total price of the cart by dividing items according to types
  */
 function checkout() {
-    var cartItems = document.getElementsByClassName('cart-item');
-    var checkoutCart = [];
-    for (var i = 0; i < cartItems.length; i++) {
-        //pushes only the items that are visible in the cart
+    let cartItems = document.getElementsByClassName('cart-item');
+    let mainsTotal = 0,
+        startersTotal = 0,
+        dessertsTotal = 0,
+        drinksTotal = 0,
+        total = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+        //only on items that are visible in the cart
         if (!cartItems[i].classList.contains("d-none")) {
-            checkoutCart.push(cartItems[i].getElementsByClassName('cart-name')[0].innerText);
-            checkoutCart.push(cartItems[i].getElementsByClassName('cart-quantity')[0].value);
+            let price = cartItems[i].getElementsByClassName('cart-price')[0].innerText;
+            price.replace(' /pc', '');
+            let quantity = cartItems[i].getElementsByClassName('cart-quantity')[0].value;
+            switch (cartItems[i].dataset.type) {
+                case "mains":
+                    mainsTotal = mainsTotal + (parseFloat(price) * quantity)
+                    document.getElementById('mainsTotal').innerHTML = Math.round(mainsTotal);
+                    break;
+                case "starters":
+                    startersTotal = startersTotal + (parseFloat(price) * quantity)
+                    document.getElementById('startersTotal').innerHTML = Math.round(startersTotal);
+                    break;
+                case "desserts":
+                    dessertsTotal = dessertsTotal + (parseFloat(price) * quantity);
+                    document.getElementById('dessertsTotal').innerHTML = Math.round(dessertsTotal);
+                    break;
+                case "drinks":
+                    drinksTotal = drinksTotal + (parseFloat(price) * quantity);
+                    document.getElementById('drinksTotal').innerHTML = Math.round(drinksTotal);
+                    break;
+                default:
+                    break;
+            }
         }
     }
-    return checkoutCart;
+    total = mainsTotal + startersTotal + dessertsTotal + drinksTotal;
+    total = Math.round(total);
+    document.getElementsByClassName('cart-total')[0].innerHTML = `Total: € ${total} `;
 }
