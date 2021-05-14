@@ -191,7 +191,7 @@ function checkout() {
     for (let i = 0; i < cartItems.length; i++) {
         //only on items that are visible in the cart
         if (!cartItems[i].classList.contains("d-none")) {
-            
+           
             let price = cartItems[i].getElementsByClassName('cart-price')[0].innerText;
             price.replace(' /pc', '');
             let quantity = cartItems[i].getElementsByClassName('cart-quantity')[0].value;
@@ -233,8 +233,8 @@ function checkout() {
     //styling bars to display veg vs Non veg
     let vegEl = document.getElementById('vegBar');
     let nonvegEl = document.getElementById('nonvegBar');
-    vegEl.style.width = `${vegTotal*10}px`;
-    vegEl.innerHTML = `Veg: €${vegTotal.toFixed(2)}`
-    nonvegEl.style.width = `${nonvegTotal*10}px`;
-    nonvegEl.innerHTML = `Non-Veg: €${nonvegTotal.toFixed(2)}`
+    vegEl.style.width = `${vegTotal*15}px`;
+    vegEl.innerHTML = `€${vegTotal.toFixed(2)}`
+    nonvegEl.style.width = `${nonvegTotal*15}px`;
+    nonvegEl.innerHTML = `€${nonvegTotal.toFixed(2)}`
 }

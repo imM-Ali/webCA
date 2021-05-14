@@ -16,7 +16,7 @@
 <body>
     <header class="header">
         <div class="header_item">
-            <a href="#"><img style="height: 15vh;" src="/img/brand.png" /></a>
+            <a href="#" onclick="window.location.reload()"><img style="height: 15vh;" src="/img/brand.png" /></a>
         </div>
     </header>
     <div class="container">
@@ -102,13 +102,18 @@
                 </table>
             </div>
             <!-- displays bar comparison of Veg vs Non veg -->
-            <div class="pb-5" style="font-size: 0.8em;">
-                <div class="row p-0 ml-5 mr-5 ">
-                    <div id="vegBar"></div>
+            <div class="pb-5" style="font-size: 1em;">
+                <div class="p-0 ml-5 mr-5 ">
+                    <span>Veg: </span>
+                    <div id="vegBar"> </div>
                 </div>
-                <div class="row p-0 ml-5 mr-5">
-                    <div id="nonvegBar"></div>
+                <div class="p-0 ml-5 mr-5">
+                    <span>Non-Veg: </span>
+                    <div id="nonvegBar"> </div>
                 </div>
+            </div>
+            <div class="actions">
+                <a href="page2.html" class="btn btn-secondary" id="nextPage">Next Page <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
 
