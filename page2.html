@@ -14,10 +14,11 @@
 </head>
 
 <body>
+    <div id="loader"></div>
     <div class="pageTitle">
         <strong>Turkish Cuisine</strong>
     </div>
-    <button class="nxtBtn btn btn-secondary">Click to View</button>
+    <button class="nxtBtn btn">Click to View</button>
     <div class="info" hidden>
         <ul>
             <li>Cig Kofte</li>
@@ -28,8 +29,7 @@
         </ul>
         <hr>
     </div>
-
-    <div class="image" hidden> </div>
+    <div class="image d-lg-block d-md-block d-sm-none" hidden></div>
     <div class="content mt-2" hidden>
         <section id="CigKofte" hidden>
             <p>
@@ -86,7 +86,7 @@
                      */
                     $('.info').removeAttr('hidden');
                     $('.nxtBtn').attr("hidden", "")
-
+                    $('#loader').attr("hidden", "");
                 })
                 /**
                  * clicking on each list item changes the image according to the targets name
@@ -94,7 +94,7 @@
             $('li').on('click', (e) => {
                 $('.image').removeAttr('hidden').css({
                         "background": `url('../img/${e.target.innerHTML}.jpg')`,
-                        "height": "60%",
+                        "height": "60vh",
                         "border-radius": "10px",
                         "background-position": "center",
                         "background-size": "cover",
