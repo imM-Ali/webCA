@@ -1,0 +1,54 @@
+body {
+    background: url('../img/back2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+}
+
+.pageTitle {
+    font-size: 2em;
+    text-align: center;
+    margin: 15px 0px;
+    color: #fff;
+}
+
+.image {
+    background: url('../img/hero2.jpg');
+    height: 60%;
+    border-radius: 10px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-bottom: 2px;
+}
+
+.info {
+    color: black;
+    padding: 0px 15px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.info li {
+    display: inline;
+    margin: 0px 50px;
+    cursor: pointer;
+    font-size: 0.7em;
+    transition: ease 0.3s;
+}
+
+.info li:active {
+    font-size: 0.8em;
+    transition: ease 0.2s;
+}
+
+.btn {
+    margin-left: 45%;
+    margin-top: 50px
+}
+
+section {
+    text-align: center;
+    padding: 25px 50px;
+}

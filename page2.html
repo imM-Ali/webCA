@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turkey - wonderland realized</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./css/style2.css">
+</head>
+
+<body>
+    <div class="pageTitle">
+        <strong>Turkish Cuisine</strong>
+    </div>
+    <button class="nxtBtn btn btn-secondary">Click to View</button>
+    <div class="info" hidden>
+        <ul>
+            <li>Cig Kofte</li>
+            <li>Lamb Biryani</li>
+            <li>Hummus</li>
+            <li>Baklava</li>
+            <li>Haydari</li>
+        </ul>
+        <hr>
+    </div>
+
+    <div class="image" hidden> </div>
+    <div class="content mt-2" hidden>
+        <section id="CigKofte" hidden>
+            <p>
+                Bulgur is kneaded with chopped onions and water until it gets soft. Then tomato and pepper paste, spices and very fine ground beef or lamb are added. This absolutely fatless raw mincemeat is treated with spices while kneading the mixture, which is said
+                to "cook" the meat. Lastly, green onions, fresh mint and parsley are mixed in. Some çiğ köfte makers, particularly in Adıyaman, do not use water in their recipes. Instead of water, they use ice cubes and lemons. In the beef variant, ground
+                beef is used. Tendons and fat are removed before grinding the beef. High-quality beef is required, since it is served raw.Since lamb is considered a "clean meat", it is often used for çiğ köfte instead of beef. Both Armenians and Turks
+                use çiğ köfte as a meze, served almost cold. The raw meatball, or kofta, is not kept overnight and is reserved for special occasions. The lamb used must be deboned and trimmed of gristle and fat before it is prepared. The lamb is supposed
+                to be butchered, bought, and prepared the very same day to ensure freshness. With either meat, finely ground bulgur (durum and other wheat) is required. Other ingredients are mild onions, scallions, parsley, and usually green pepper. Variants
+                of the dish may use tomato sauce, Tabasco sauce, and mint leaves. When served, it may be gathered into balls, or in one piece. Crackers or pita bread are sometimes used to consume it.
+            </p>
+        </section>
+        <section id="LambBiryani" hidden>
+            <p>
+                A fragrant rice with a hearty combination of spices, meat and potatoes, steamed together. The dish is topped with caramelized onions that add depth and a subtle flavor! A complete meal in itself! There are various types of biryani and I guess almost each
+                state of India has a biryani recipe. Biryani has been introduced to the Middle East by the large Indian diaspora there. I bet the dish suits the weather that is moving from the heat of summer to the cool of Autumn. But beware it is a bit
+                time-consuming! I don’t expect you to do this on a busy day! Just keep it for major holidays or special occasions – but I urge you to do it one day if you haven’t done it before!
+            </p>
+        </section>
+        <section id="Hummus" hidden>
+            <p>
+                In Middle Eastern cuisine, it is usually eaten as a dip, with pita bread. In the West, it is now produced industrially, and is often served as a snack or appetizer with crackers.
+            </p>
+        </section>
+        <section id="Baklava" hidden>
+            <p> Baklava is a layered pastry dessert made of filo pastry, filled with chopped nuts, and sweetened with syrup or honey. It was one of the most popular sweet pastries of Ottoman cuisine.[3] The pre-Ottoman origin of the dish is unknown, but,
+                in modern times, it is a common dessert of Iranian, Turkish and Arab cuisines, and other countries of the Levant and Maghreb, along with the South Caucasus, Balkans, and Central Asia.
+            </p>
+        </section>
+        <section id="Haydari" hidden>
+            <p>
+                Haydari is a type of yogurt dish similar to a thick cacık, made from certain herbs and spices, combined with garlic and yogurt. It differs from cacık in that the recipe contains no cucumber and calls for strained yogurt or labne. It is served purely as
+                a meze, being more pungently appetizing - by virtue of being saltier, more acidic and of a thicker consistency
+            </p>
+        </section>
+
+
+    </div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script>
+        $('document').ready(() => {
+            $('.nxtBtn').on('click', () => {
+                    /**
+                     * hides the initital button and displays food items in an unordered list
+                     */
+                    $('.info').removeAttr('hidden');
+                    $('.nxtBtn').attr("hidden", "")
+
+                })
+                /**
+                 * clicking on each list item changes the image according to the targets name
+                 */
+            $('li').on('click', (e) => {
+                $('.image').removeAttr('hidden').css({
+                        "background": `url('../img/${e.target.innerHTML}.jpg')`,
+                        "height": "60%",
+                        "border-radius": "10px",
+                        "background-position": "center",
+                        "background-size": "cover",
+                        "background-repeat": "no-repeat",
+                        "margin": "0px 20vh"
+                    })
+                    /**
+                     * hides all sections except the one clicked upon
+                     */
+                $(".content").removeAttr('hidden');
+                $('section').attr("hidden", "");
+                $(`#${e.target.innerText.replace(" ","")}`).removeAttr('hidden').css({
+                    "height": "60%",
+                    "background-color": "white",
+                    "border-radius": "10px",
+                    "margin": "1px 20vh",
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
