@@ -99,7 +99,8 @@ fetch('https://api.jsonbin.io/b/609286acd64cd16802ab0af6/4').then(response => re
         //populating cart - hidden on initital state
         let cart = document.getElementById('cart');
         cart.innerHTML += `<div data-type="${foodContainer.classList[0]}" class="cart-item mt-2 mb-4 d-none">
-        <span class="cart-name">${object.name}</span>    
+        <span class="cart-name">${object.name}</span>
+        <input class="isVeg" hidden type="text" value="${object.isVeg?`yes`:'no'}">    
         <input class="cart-quantity" placeholder="0" type="number" min="0" max="5" readOnly>
         <span class="cart-price">${object.price} /pc</span>
         </div>`
@@ -174,41 +175,66 @@ document.getElementById('checkout-btn').addEventListener('click', checkout);
  * Calculates and displays the total price of the cart by dividing items according to types
  */
 function checkout() {
+    //resetting the fields everytime function is called
+    document.getElementById('mainsTotal').innerHTML = "";
+    document.getElementById('startersTotal').innerHTML = ""
+    document.getElementById('dessertsTotal').innerHTML= "";
+    document.getElementById('drinksTotal').innerHTML= "";
     let cartItems = document.getElementsByClassName('cart-item');
     let mainsTotal = 0,
         startersTotal = 0,
         dessertsTotal = 0,
         drinksTotal = 0,
+        vegTotal=0,
+        nonvegTotal=0,
         total = 0;
     for (let i = 0; i < cartItems.length; i++) {
         //only on items that are visible in the cart
         if (!cartItems[i].classList.contains("d-none")) {
+            
             let price = cartItems[i].getElementsByClassName('cart-price')[0].innerText;
             price.replace(' /pc', '');
             let quantity = cartItems[i].getElementsByClassName('cart-quantity')[0].value;
+            //the second child element of cart item is the hidden field whose value is 'yes' if product is vegetarian
+            if(cartItems[i].getElementsByClassName('isVeg')[0].value=='yes'){
+                vegTotal = vegTotal + (parseFloat(price) * quantity)
+                
+            }                
             switch (cartItems[i].dataset.type) {
                 case "mains":
                     mainsTotal = mainsTotal + (parseFloat(price) * quantity)
-                    document.getElementById('mainsTotal').innerHTML = Math.round(mainsTotal);
+                    document.getElementById('mainsTotal').innerHTML = `€ ${mainsTotal.toFixed(2)}`;
+                    if(cartItems[i].getElementsByClassName('isVeg')[0].value=='no'){
+                        nonvegTotal = nonvegTotal + (parseFloat(price) * quantity)
+                    }
                     break;
                 case "starters":
                     startersTotal = startersTotal + (parseFloat(price) * quantity)
-                    document.getElementById('startersTotal').innerHTML = Math.round(startersTotal);
+                    document.getElementById('startersTotal').innerHTML = `€ ${startersTotal.toFixed(2)}`;
+                    if(cartItems[i].getElementsByClassName('isVeg')[0].value=='no'){
+                        nonvegTotal = nonvegTotal + (parseFloat(price) * quantity)
+                    }
                     break;
                 case "desserts":
                     dessertsTotal = dessertsTotal + (parseFloat(price) * quantity);
-                    document.getElementById('dessertsTotal').innerHTML = Math.round(dessertsTotal);
+                    document.getElementById('dessertsTotal').innerHTML = `€ ${dessertsTotal.toFixed(2)}`;
                     break;
                 case "drinks":
                     drinksTotal = drinksTotal + (parseFloat(price) * quantity);
-                    document.getElementById('drinksTotal').innerHTML = Math.round(drinksTotal);
+                    document.getElementById('drinksTotal').innerHTML = `€ ${drinksTotal.toFixed(2)}`;
                     break;
                 default:
                     break;
             }
         }
     }
-    total = mainsTotal + startersTotal + dessertsTotal + drinksTotal;
-    total = Math.round(total);
-    document.getElementsByClassName('cart-total')[0].innerHTML = `Total: € ${total} `;
+    total = mainsTotal + startersTotal + dessertsTotal + drinksTotal;    
+    document.getElementsByClassName('cart-total')[0].innerHTML = `Total: € ${total.toFixed(2)} `;
+    //styling bars to display veg vs Non veg
+    let vegEl = document.getElementById('vegBar');
+    let nonvegEl = document.getElementById('nonvegBar');
+    vegEl.style.width = `${vegTotal*10}px`;
+    vegEl.innerHTML = `Veg: €${vegTotal.toFixed(2)}`
+    nonvegEl.style.width = `${nonvegTotal*10}px`;
+    nonvegEl.innerHTML = `Non-Veg: €${nonvegTotal.toFixed(2)}`
 }

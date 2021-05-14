@@ -25,7 +25,7 @@
         <div id="section1" class="row">
             <div class="col-6 align-center">
                 <input type="password" class="form-control" id="pass" placeholder="Password">
-                <button class="btn btn-light mt-2" id="mybtn">Proceed</button>
+                <button class="btn btn-light mt-2" id="mybtn">Show Users</button>
                 <small id="error"></small>
             </div>
         </div>
@@ -73,7 +73,7 @@
             </div>
             <!-- displays breakdown of cart total -->
             <div class="d-flex justify-content-center pb-5">
-                <table class="table">
+                <table class="table ml-5 mr-5">
                     <thead>
                         <tr>
                             <th scope="col">Item Type</th>
@@ -100,6 +100,15 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <!-- displays bar comparison of Veg vs Non veg -->
+            <div class="pb-5" style="font-size: 0.8em;">
+                <div class="row p-0 ml-5 mr-5 ">
+                    <div id="vegBar"></div>
+                </div>
+                <div class="row p-0 ml-5 mr-5">
+                    <div id="nonvegBar"></div>
+                </div>
             </div>
         </div>
 

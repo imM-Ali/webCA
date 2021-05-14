@@ -138,3 +138,17 @@ body {
 .action-btn {
     margin-left: 20px;
 }
+
+#vegBar {
+    background-color: lightgreen;
+    text-align: center;
+    min-width: fit-content;
+    height: 2em;
+}
+
+#nonvegBar {
+    background-color: burlywood;
+    text-align: center;
+    min-width: fit-content;
+    height: 2em;
+}
