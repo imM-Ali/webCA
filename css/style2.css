@@ -55,6 +55,19 @@ body {
     background-color: darkgrey;
     height: 2em;
     width: 2.3em;
+    cursor: pointer;
+}
+
+.gitBtn {
+    position: fixed;
+    right: 0px;
+    bottom: 140px;
+    border: none;
+    background-color: darkgrey;
+    height: 2em;
+    width: 2.3em;
+    cursor: pointer;
+    color: black;
 }
 
 .dark-mode {
