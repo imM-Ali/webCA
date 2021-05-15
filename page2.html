@@ -101,7 +101,7 @@
                  */
             $('li').on('click', (e) => {
                     $('.image').removeAttr('hidden').css({
-                            "background": `url('../img/${e.target.innerHTML}.jpg')`,
+                            "background": `url('./img/${e.target.innerHTML}.jpg')`,
                             "height": "60vh",
                             "border-radius": "10px",
                             "background-position": "center",
@@ -141,7 +141,6 @@
          * on window scroll, fills the bar at the top of window according to scroll percentage
          */
         $(window).scroll(function() {
-            console.log($(window).scrollTop(), $(document).height(), $(window).height(), "--")
             var Scroll = $(window).scrollTop(),
                 docSize = $(document).height(),
                 winSize = $(window).height();
