@@ -6,15 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turkey - wonderland realized</title>
+    <link rel="icon" href="https://images.unsplash.com/photo-1605581810011-c6d684e7ca22?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=722&q=80" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="./css/style2.css">
+
 </head>
 
 <body>
+    <div class="progress">
+        <span class="fill"></span>
+    </div>
+    <button class="darkBtn"><i class="fas fa-lightbulb-on"></i></button>
     <div id="loader"></div>
+
     <div class="pageTitle">
         <strong>Turkish Cuisine</strong>
     </div>
@@ -29,6 +36,7 @@
         </ul>
         <hr>
     </div>
+
     <div class="image d-lg-block d-md-block d-sm-none" hidden></div>
     <div class="content mt-2" hidden>
         <section id="CigKofte" hidden>
@@ -92,28 +100,56 @@
                  * clicking on each list item changes the image according to the targets name
                  */
             $('li').on('click', (e) => {
-                $('.image').removeAttr('hidden').css({
-                        "background": `url('../img/${e.target.innerHTML}.jpg')`,
-                        "height": "60vh",
+                    $('.image').removeAttr('hidden').css({
+                            "background": `url('../img/${e.target.innerHTML}.jpg')`,
+                            "height": "60vh",
+                            "border-radius": "10px",
+                            "background-position": "center",
+                            "background-size": "cover",
+                            "background-repeat": "no-repeat",
+                            "margin": "0px 20vh"
+                        })
+                        /**
+                         * hides all sections except the one clicked upon
+                         */
+                    $(".content").removeAttr('hidden');
+                    $('section').attr("hidden", "");
+                    $(`#${e.target.innerText.replace(" ","")}`).removeAttr('hidden').css({
+                        "height": "60%",
+                        "background": "rgba(0,0,0,0.7)",
+                        'color': '#fff',
                         "border-radius": "10px",
-                        "background-position": "center",
-                        "background-size": "cover",
-                        "background-repeat": "no-repeat",
-                        "margin": "0px 20vh"
+                        "margin": "1px 20vh",
                     })
-                    /**
-                     * hides all sections except the one clicked upon
-                     */
-                $(".content").removeAttr('hidden');
-                $('section').attr("hidden", "");
-                $(`#${e.target.innerText.replace(" ","")}`).removeAttr('hidden').css({
-                    "height": "60%",
-                    "background-color": "white",
-                    "border-radius": "10px",
-                    "margin": "1px 20vh",
+
                 })
+                /**
+                 * toggles text color classes on click 
+                 */
+            $('.darkBtn').on('click', (e) => {
+                $('body').toggleClass('dark-mode');
+                $('.darkBtn').toggleClass('text-warning')
+                $('li').toggleClass('text-white')
             })
+
+
         })
+    </script>
+    <script>
+        /**
+         * on window scroll, fills the bar at the top of window according to scroll percentage
+         */
+        $(window).scroll(function() {
+            console.log($(window).scrollTop(), $(document).height(), $(window).height(), "--")
+            var Scroll = $(window).scrollTop(),
+                docSize = $(document).height(),
+                winSize = $(window).height();
+            scrollPercent = (Scroll / (docSize - winSize)) * 100;
+            var position = scrollPercent;
+
+            $('.fill').width(position + '%');
+
+        });
     </script>
 </body>
 

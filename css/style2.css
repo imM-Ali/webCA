@@ -5,6 +5,21 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.progress {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 1%;
+    background: transparent;
+}
+
+.fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, #30e8bf, #ff8235);
+    transition: 0.3s;
+}
+
 .pageTitle {
     font-size: 2em;
     text-align: center;
@@ -32,6 +47,32 @@ body {
     transition: ease 0.2s;
 }
 
+.darkBtn {
+    position: fixed;
+    right: 0px;
+    bottom: 90px;
+    border: none;
+    background-color: darkgrey;
+    height: 2em;
+    width: 2.3em;
+}
+
+.dark-mode {
+    background: url('../img/dark-back.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.bgBtn {
+    position: absolute;
+    right: 0px;
+    bottom: 140px;
+    border: none;
+    background-color: darkgrey;
+    height: 2em;
+    width: 2.3em;
+}
+
 .btn {
     display: block;
     margin: 5px auto;
@@ -43,6 +84,7 @@ body {
 
 section {
     padding: 25px 40px;
+    opacity: 65%;
 }
 
 #loader {
